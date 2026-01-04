@@ -1,0 +1,116 @@
+import React, { useEffect, useState } from "react";
+
+const LastOrdersTable = () => {
+  const [orders, setOrders] = useState([]);
+ 
+
+  const ordersArr = [
+  { id: "2", userId: 2, customerName: "Sara Mohammadi", productId: 2, payment: "not paid", productName: "AirPods Pro", total: 8500000, status: "pending", date: "2025-01-13T14:45:00", qty: 2, productImage: "/images/airpod.jpg" },
+  { id: "3", userId: 3, customerName: "Reza Gohari", productId: 3, payment: "paid", productName: "MacBook Air M2", total: 48000000, status: "delivered", date: "2025-01-11T17:10:00", qty: 1, productImage: "/images/mac.jpg" },
+  { id: "4", userId: 2, customerName: "Sara Mohammadi", productId: 4, payment: "paid", productName: "Samsung Watch 6", total: 12500000, status: "canceled", date: "2025-01-14T08:30:00", qty: 5, productImage: "/images/watch.jpg" },
+  { id: "5", userId: 1, customerName: "Ali Rezayi", productId: 5, payment: "not paid", productName: "PlayStation 5", total: 27500000, status: "delivered", date: "2025-01-10T12:50:00", qty: 4, productImage: "/images/playstion.jpg" },
+  { id: "6", userId: 4, customerName: "Elham Imani", productId: 6, payment: "paid", productName: "Lenovo", total: 48000000, status: "pending", date: "2025-01-13T20:15:00", qty: 3, productImage: "/images/lenovo.jpg" }
+];
+
+  
+  const statusClass = (status) => {
+    const s = (status || "").toString().toLowerCase();
+    if (s === "delivered") return "bg-green-100 text-green-700";
+    if (s === "pending") return "bg-yellow-100 text-yellow-700";
+    if (s === "canceled") return "bg-red-100 text-red-700";
+    return "bg-gray-100 text-gray-700";
+  };
+
+  useEffect(() => {
+    const fetchOrders = () => {
+        const data = ordersArr
+
+        const list = Array.isArray(data) ? data : data.orders || [];
+
+        const sorted = list.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        setOrders(sorted.slice(0, 4)); 
+    };
+
+    fetchOrders();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const formatDate = (iso) => {
+    try {
+      return new Date(iso).toLocaleString();
+    } catch {
+      return iso;
+    }
+  };
+
+  return (
+    <div className="bg-white p-5 rounded-xl shadow overflow-x-auto max-w-200">
+
+      <table className="w-full min-w-187.5  text-sm border-collapse table-fixed ">
+        <thead>
+          <tr className="border-b border-b-zinc-500">
+            <th className="py-2 text-center font-semibold">Product</th>
+            <th className="py-2 text-center font-semibold">Customer</th>
+            <th className="py-2 text-center font-semibold">Status</th>
+            <th className="py-2 text-center font-semibold">Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {Array.isArray(orders) && orders.length > 0 ? (
+            orders.map((order) => (
+              <tr key={order.id} className="transition hover:bg-gray-50">
+                {/* PRODUCT (image + name) */}
+                <td className="py-3 px-2 text-center">
+                  <div className="flex items-center justify-start gap-3">
+                    <div className="w-12 h-12 rounded-md bg-gray-100 overflow-hidden shrink-0">
+                      {/* اگر productImage مسیر محلی است باید در public قرارگیرد مثل /images/airpod.jpg */}
+                      <img
+                        src={order.productImage}
+                        alt={order.productName}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="font-medium text-gray-700 whitespace-nowrap text-[14px]">
+                      {order.productName}
+                    </span>
+                  </div>
+                </td>
+
+                {/* CUSTOMER */}
+                <td className="py-3 px-2 text-center text-gray-600 whitespace-nowrap text-[14px]">
+                  {order.customerName}
+                </td>
+
+                {/* STATUS */}
+                <td className="py-3 px-2 text-center">
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${statusClass(
+                      order.status
+                    )}`}
+                  >
+                    {order.status}
+                  </span>
+                </td>
+
+                {/* DATE */}
+                <td className="py-3 px-2 text-center text-gray-600 whitespace-nowrap text-[12px]">
+                  {formatDate(order.date)}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={4} className="py-6 text-center text-gray-500">
+                No orders to show
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default LastOrdersTable;
