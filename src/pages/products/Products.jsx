@@ -5,14 +5,37 @@ export default function Products() {
   const [showModal, setShowModal] = useState(false);
   const [current, setCurrent] = useState(null);
   const [modalDelete, setModalDelete] = useState(false);
- 
-  const productsArr = [
-  { id: "2", name: "iPhone 15", price: "1700", stock: "4", image: "/images/iphone14.jpg" },
-  { id: "3", name: "monitor", price: "50000", stock: "3", image: "/images/monitor.jpg" },
-  { id: "4", name: "watch", price: "30000", stock: "10", image: "/images/watch.jpg" },
-  { id: "5", name: "mac", price: "70000", stock: "5", image: "/images/mac.jpg" }
-];
 
+  const productsArr = [
+    {
+      id: "2",
+      name: "iPhone 15",
+      price: "1700",
+      stock: "4",
+      image: "/images/iphone14.jpg",
+    },
+    {
+      id: "3",
+      name: "monitor",
+      price: "50000",
+      stock: "3",
+      image: "/images/monitor.jpg",
+    },
+    {
+      id: "4",
+      name: "watch",
+      price: "30000",
+      stock: "10",
+      image: "/images/watch.jpg",
+    },
+    {
+      id: "5",
+      name: "mac",
+      price: "70000",
+      stock: "5",
+      image: "/images/mac.jpg",
+    },
+  ];
 
   const editBtn = (id) => {
     setCurrent(product.find((item) => item.id === id));
@@ -25,17 +48,15 @@ export default function Products() {
 
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSave = async () => {
-
     fetchData();
     setShowModal(false);
   };
 
   const deleteProduct = async () => {
-
     fetchData();
     setModalDelete(false);
   };
@@ -147,7 +168,9 @@ export default function Products() {
 
                 <input
                   placeholder={current.image}
-                  className="flex-1 border rounded-lg pl-0.5 py-1 sm:px-3 sm:py-2 focus:outline-none focus:ring focus:ring-green-300"
+                  className="flex-1 min-w-0 border rounded-lg px-2 py-2
+             overflow-hidden text-ellipsis whitespace-nowrap
+             focus:outline-none focus:ring focus:ring-green-300"
                 />
               </div>
 
