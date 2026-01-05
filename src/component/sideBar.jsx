@@ -19,11 +19,24 @@ export default function SideBar() {
     setOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+  if (open) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "";
+  }
+
+  return () => {
+    document.body.style.overflow = "";
+  };
+}, [open]);
+
+
 
   return (
     <>
       <div
-        className={`fixed left-0 top-0 z-50 h-full bg-white shadow transition-all duration-300
+        className={`fixed left-0 top-0 z-50 h-dvh bg-white shadow transition-all duration-300
       ${open ? "w-57.5" : "w-17.5"}`}
       >
         {/* Toggle Button */}

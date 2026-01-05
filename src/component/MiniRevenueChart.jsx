@@ -30,7 +30,7 @@ useEffect(() => {
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
   return (
-    <div className="w-full h-35">
+    <div className=" h-35 overflow-x-auto">
       <LineChart 
         width={300} 
         height={140} 

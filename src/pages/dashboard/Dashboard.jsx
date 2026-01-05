@@ -31,8 +31,8 @@ export default function Dashboard() {
     <>
       <div className=" px-4 md:px-6 mt-15 ">
         {/*  Last Orders و Top Selling */}
-        <div className="flex flex-col lg:flex-row mb-20 flex-wrap gap-5 overflow-x-auto">
-          <div className="flex-1 flex flex-col gap-4 overflow-x-auto ">
+        <div className="flex flex-col lg:flex-row mb-20  gap-5 overflow-x-auto">
+          <div className="flex flex-col gap-4  ">
             <h1 className="text-lg md:text-2xl font-semibold">Last orders</h1>
             <LastOrdersTable />
           </div>
@@ -77,7 +77,7 @@ export default function Dashboard() {
             <h2 className="text-lg md:text-2xl font-semibold">
               Today's revenue
             </h2>
-            <div className="w-75 overflow-x-auto">
+            <div className=" overflow-x-auto">
               <MiniRevenueChart />
             </div>
           </div>
