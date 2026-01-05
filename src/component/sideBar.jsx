@@ -1,4 +1,4 @@
-import React, { useState , useEffect , } from "react";
+import React, {useEffect } from "react";
 import { LuUsersRound } from "react-icons/lu";
 import {
   MdOutlineProductionQuantityLimits,
@@ -9,27 +9,42 @@ import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Link } from "react-router";
 import { IoChevronBack } from "react-icons/io5";
 import { useLocation } from "react-router";
+import { useSidebar } from "./sidebarContext";
 
 export default function SideBar() {
-  const [open, setOpen] = useState(false);
+   const { open, setOpen } = useSidebar();
   const location = useLocation();
   
    useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
-  useEffect(() => {
+ useEffect(() => {
+  const html = document.documentElement;
+  const body = document.body;
+
   if (open) {
-    document.body.style.overflow = "hidden";
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.width = "100%";
   } else {
-    document.body.style.overflow = "";
+    html.style.overflow = "";
+    body.style.overflow = "";
+    body.style.position = "";
+    body.style.width = "";
   }
 
   return () => {
-    document.body.style.overflow = "";
+    html.style.overflow = "";
+    body.style.overflow = "";
+    body.style.position = "";
+    body.style.width = "";
   };
 }, [open]);
+
 
 
 

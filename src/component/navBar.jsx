@@ -5,15 +5,18 @@ import { IoClose } from "react-icons/io5";
 export default function NavBar() {
   const [showModal, setShowModal] = useState(false);
   const [notif, setNotif] = useState([]);
- 
 
   const notifications = [
-  { id: "1", message: "New order received", time: "2 minutes ago" },
-  { id: "2", message: "5 products are low on stock", time: "10 minutes ago" },
-  { id: "3", message: "New user registered", time: "1 hour ago" },
-  { id: "4", message: "hellow boss,i see you at afternoon in your house with my family.good lock", time: "last day" }
-];
-
+    { id: "1", message: "New order received", time: "2 minutes ago" },
+    { id: "2", message: "5 products are low on stock", time: "10 minutes ago" },
+    { id: "3", message: "New user registered", time: "1 hour ago" },
+    {
+      id: "4",
+      message:
+        "hellow boss,i see you at afternoon in your house with my family.good lock",
+      time: "last day",
+    },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,13 +24,34 @@ export default function NavBar() {
     };
 
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const main = document.querySelector("main");
+
+    if (!main) return;
+
+    const onScroll = () => {
+      setScrolled(main.scrollTop > 0);
+    };
+
+    main.addEventListener("scroll", onScroll);
+    return () => main.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      <div className=" mt-5 flex flex-row justify-between items-center max-w-300 px-4 sm:px-0">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-0">Reports</h1>
+      <div
+        className={` mt-5 ml-2 sm:ml-9 flex flex-row justify-between items-center max-w-300 px-4 sm:px-0   ${
+          scrolled
+            ? "bg-white rounded-xl shadow border border-gray-200 p-1.5"
+            : "bg-transparent"
+        }`}
+      >
+        <h1 className="text-[18px] sm:text-3xl font-bold mb-3 sm:mb-0">Reports</h1>
 
         <div className="flex flex-row gap-4 sm:gap-12 items-center">
           {/* Notifications */}
@@ -72,7 +96,9 @@ export default function NavBar() {
               {notif.map((msg) => {
                 return (
                   <div key={msg.id} className="mb-3.5">
-                    <p className="mb-2.5 font-bold text-[14px] sm:text-base">{msg.message}</p>
+                    <p className="mb-2.5 font-bold text-[14px] sm:text-base">
+                      {msg.message}
+                    </p>
                     <span className="opacity-50 text-[12px]">{msg.time}</span>
                   </div>
                 );
